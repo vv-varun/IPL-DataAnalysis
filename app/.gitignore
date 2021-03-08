@@ -1,0 +1,5 @@
+# IDE Files
+.vscode
+
+# Model files
+*.joblib
