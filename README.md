@@ -4,10 +4,16 @@ In this project, I am analyzing the IPL data with the following goal:
 - Do some real life predictions
 
 ## Data Source
-The data source has been taken from [Data world](https://data.world/raghu543/ipl-data-till-2017)
+The data has been taken from multiple sources and merged into a single data source.
 
-This data source contains ball-by-ball details of matches from 2008-2017. 
-Since the data is very granluar, its huge and not suitable for direct analysis.
+- Data Set 1: From [Data world](https://data.world/raghu543/ipl-data-till-2017)
+
+    This data source contains ball-by-ball details of matches from 2008-2017. 
+
+- Data Set 2: From [Cricsheet](https://cricsheet.org) -- Yet to be imported and merged.
+
+In order to derive best statistics, I have used the most granular data. 
+The data set is huge, and is not suitable for direct analysis.
 
 So, I have pre-processed it and exported only the data required for my analysis as CSV files.
 
