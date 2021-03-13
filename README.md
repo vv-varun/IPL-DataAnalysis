@@ -21,3 +21,17 @@ So, I have pre-processed it and exported only the data required for my analysis 
 ## Problems to Analyze
 Several kinds of analysis can be done from this data. In my project, I'll focus on the following.
 1. Predict the match result at the start of the final over
+
+
+## Feedback & Contribution
+First of all - Thank you for contributing. 
+
+You can contribute by 
+1. Testing and reporting issues
+2. Helping in documentation
+3. Improving my ML model
+4. Contribute by adding new data sets
+5. Fixing bugs
+6. Improve the usability of the app
+
+--- and also in many more ways --- 
