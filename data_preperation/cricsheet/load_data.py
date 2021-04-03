@@ -196,7 +196,7 @@ def parseInningsData(innings_data):
         ball_no = str(list(delivery.keys())[0])
         ball_details = list(delivery.values())[0]
 
-        wicket = ball_details.get('wicket', {'player_out':'','kind':''})
+        wicket = ball_details.get('wicket', {'player_out':'','kind':'Not Applicable'})
         wicket_kind = wicket.get('kind','')
         if wicket_kind in bowler_wicket_list:
             wicket['Bowler_Wicket'] = 1

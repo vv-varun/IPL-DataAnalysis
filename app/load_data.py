@@ -16,18 +16,20 @@ db_connection = mysql.connector.connect(
 def uploadPlayerProfileData(player_data):
     for player in player_data:
         pk = client.key("Players", player['id'])
-        pd = client.get(pk)
-        pd["id"] = player['id']
-        pd["player_name"] = player['player_name']
-        pd["bowling_stats"] = {"end_game_stats":{}, "life_time_stats":{}}
-        pd["batting_stats"] = {"end_game_stats":{}, "life_time_stats":{}}
+        pd = datastore.Entity(key=pk)
+        pd.update({
+            "id": player['id'],
+            "player_name": player['player_name'],
+            "bowling_stats": {"end_game_stats":{}, "life_time_stats":{}},
+            "batting_stats": {"end_game_stats":{}, "life_time_stats":{}}
+        })
         client.put(pd)
     return "Done"
 
 # Read Player Profile data
 def readPlayerProfileData():
     my_database = db_connection.cursor()
-    sql_statement = "SELECT * FROM players"
+    sql_statement = "SELECT * FROM players where Player_Id > 496"
     my_database.execute(sql_statement)
     result_set = my_database.fetchall()
     player_list = []
@@ -146,6 +148,7 @@ def readBatsmanEndGameStatistics():
 
 # Load player profile data
 #player_data = readPlayerProfileData()
+#print(player_data)
 #uploadPlayerProfileData(player_data)
 
 # Load Bowler End Game Statistics
