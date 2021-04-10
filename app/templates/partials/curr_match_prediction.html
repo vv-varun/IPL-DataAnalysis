@@ -1,0 +1,57 @@
+<br>
+<h3>Current match prediction at start of 20th Over</h3>
+<h6>Note: The prediction is for the bowling team</h6>
+<br>
+
+<div class="row">
+  <form id="current_match_details" class="needs-validation match_details" novalidate>
+    
+    <div class="form-group row">
+      <label for="runs_to_win" class="col-sm-6 col-form-label">Runs to win</label>
+      <div class="col-sm-6">
+        <input type="number" class="form-control" id="runs_to_win" required>
+      </div>
+      <div class="invalid-feedback">Please provide a value</div>
+    </div>
+
+    <div class="form-group row">
+      <label for="wickets_in_hand" class="col-sm-6 col-form-label">Wickets in hand</label>
+      <div class="col-sm-6">
+        <input type="number" class="form-control" id="wickets_in_hand" required>
+      </div>
+      <div class="invalid-feedback">Please provide a value</div>
+    </div>
+
+    <div class="form-group row">
+      <label for="cm_batsman" class="col-sm-6 col-form-label">Batsman Name</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control autocomplete" id="cm_batsman" placeholder="Search by name" required>
+      </div>
+      <div class="invalid-feedback">Please provide a value</div>
+    </div>
+
+    <div class="form-group row">
+      <label for="cm_non_striker" class="col-sm-6 col-form-label">Non Striker Name</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control autocomplete" id="cm_non_striker" placeholder="Search by name" required>
+      </div>
+      <div class="invalid-feedback">Please provide a value</div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-sm-10">
+        <button id="predict_current_match_result" class="btn btn-primary" type="button" onclick="predictCurrentMatchResult();">Calculate</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="row">
+  <ul id="cm-prediction-result" class="list-group">
+  </ul>
+</div>
+
+<div class="row">
+  <div id="cm_message-bar" class="alert">
+  </div>
+</div>

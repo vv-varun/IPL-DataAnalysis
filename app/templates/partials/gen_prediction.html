@@ -1,0 +1,60 @@
+<br>
+<h3>Predict the match result at the start of 20th Over</h3>
+<h6>Note: The prediction is for the bowling team</h6>
+<br>
+
+<div class="row">
+  <form id="match_details" class="needs-validation match_details" novalidate>
+    
+    <div class="form-group row">
+      <label for="runs_to_win" class="col-sm-6 col-form-label">Runs to win</label>
+      <div class="col-sm-6">
+        <input type="number" class="form-control" id="runs_to_win" required>
+      </div>
+      <div class="invalid-feedback">Please provide a value</div>
+    </div>
+
+    <div class="form-group row">
+      <label for="wickets_in_hand" class="col-sm-6 col-form-label">Wickets in hand</label>
+      <div class="col-sm-6">
+        <input type="number" class="form-control" id="wickets_in_hand" required>
+      </div>
+      <div class="invalid-feedback">Please provide a value</div>
+    </div>
+
+    <div class="form-group row">
+      <label for="bowler" class="col-sm-6 col-form-label">Bowler Name</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control autocomplete" id="bowler" placeholder="Search by name" required>
+      </div>
+      <div class="invalid-feedback">Please provide a value</div>
+    </div>
+
+    <div class="form-group row">
+      <label for="batsman" class="col-sm-6 col-form-label">Batsman Name</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control autocomplete" id="batsman" placeholder="Search by name" required>
+      </div>
+      <div class="invalid-feedback">Please provide a value</div>
+    </div>
+
+    <div class="form-group row">
+      <label for="non_striker" class="col-sm-6 col-form-label">Non Striker Name</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control autocomplete" id="non_striker" placeholder="Search by name" required>
+      </div>
+      <div class="invalid-feedback">Please provide a value</div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-sm-10">
+        <button id="predict_match_result" class="btn btn-primary" type="button" onclick="predictMatchResult();">Calculate</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="row">
+  <div id="message-bar" class="alert">
+  </div>
+</div>

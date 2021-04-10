@@ -45,69 +45,33 @@
   <!-- Begin page content -->
   <main role="main" class="flex-shrink-0">
     <div class="container">
-      <h1 class="mt-5">Welcome !</h1>
-      <br>
-      <h2>Predict the match result at the start of 20th Over</h2>
-      <br>
 
       <div class="row">
-        <form id="match_details" class="needs-validation match_details" novalidate>
-          
-          <div class="form-group row">
-            <label for="runs_to_win" class="col-sm-6 col-form-label">Runs to win</label>
-            <div class="col-sm-6">
-              <input type="number" class="form-control" id="runs_to_win" required>
-            </div>
-            <div class="invalid-feedback">Please provide a value</div>
-          </div>
-
-          <div class="form-group row">
-            <label for="wickets_in_hand" class="col-sm-6 col-form-label">Wickets in hand</label>
-            <div class="col-sm-6">
-              <input type="number" class="form-control" id="wickets_in_hand" required>
-            </div>
-            <div class="invalid-feedback">Please provide a value</div>
-          </div>
-
-          <div class="form-group row">
-            <label for="bowler" class="col-sm-6 col-form-label">Bowler Name</label>
-            <div class="col-sm-6">
-              <input type="text" class="form-control autocomplete" id="bowler" placeholder="Search by name" required>
-            </div>
-            <div class="invalid-feedback">Please provide a value</div>
-          </div>
-
-          <div class="form-group row">
-            <label for="batsman" class="col-sm-6 col-form-label">Batsman Name</label>
-            <div class="col-sm-6">
-              <input type="text" class="form-control autocomplete" id="batsman" placeholder="Search by name" required>
-            </div>
-            <div class="invalid-feedback">Please provide a value</div>
-          </div>
-
-          <div class="form-group row">
-            <label for="non_striker" class="col-sm-6 col-form-label">Non Striker Name</label>
-            <div class="col-sm-6">
-              <input type="text" class="form-control autocomplete" id="non_striker" placeholder="Search by name" required>
-            </div>
-            <div class="invalid-feedback">Please provide a value</div>
-          </div>
-
-          <div class="form-group row">
-            <div class="col-sm-10">
-              <button id="predict_match_result" class="btn btn-primary" type="button" onclick="predictMatchResult();">Calculate</button>
-            </div>
-          </div>
-        </form>
+        <h1 class="mt-5">Welcome !</h1>
+        <br>
       </div>
-      
+
       <div class="row">
-        <div id="message-bar" class="alert">
+        <br><br>
+      </div>
+
+      <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active" id="gen-prediction-tab" data-toggle="pill" href="#gen-prediction" role="tab" aria-controls="gen-prediction" aria-selected="true">Generic Prediction</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="curr-match-prediction-tab" data-toggle="pill" href="#curr-match-prediction" role="tab" aria-controls="curr-match-prediction" aria-selected="false">Current Match Prediction</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="gen-prediction" role="tabpanel" aria-labelledby="gen-prediction-tab">
+          <!-- Generic Prediction Form -->
+          {% include 'partials/gen_prediction.html' %}
         </div>
-      </div>
-      
-      <div class="row">
-
+        <div class="tab-pane fade" id="curr-match-prediction" role="tabpanel" aria-labelledby="curr-match-prediction-tab">
+          <!-- Generic Prediction Form -->
+          {% include 'partials/curr_match_prediction.html' %}
+        </div>
       </div>
 
     </div>
