@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en" class="h-100">
+<head>
+  {% include 'partials/head_meta.html' %}
+  <title>Local Testing</title>
+  {% include 'partials/head_scripts.html' %}
+
+  <!-- Custom styles for this template -->
+  <link href="/static/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+
+  <style>
+    ul.ui-autocomplete {
+      z-index: 1100;
+    }
+  </style>
+
+</head>
+<body class="d-flex flex-column h-100">
+
+  <header>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="#">IPL Match Prediction</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/vv-varun/IPL-DataAnalysis">Source Code</a>
+          </li>
+        </ul>
+        <form class="form-inline mt-2 mt-md-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Begin page content -->
+  <main role="main" class="flex-shrink-0">
+    <div class="container">
+
+      <div class="row">
+        <h1 class="mt-5">Welcome !</h1>
+        <br>
+      </div>
+
+      <div class="row">
+        <br><br>
+      </div>
+
+      <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active" id="player-update-tab" data-toggle="pill" href="#player-update" role="tab" aria-controls="player-update" aria-selected="true">Update Player Data</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="curr-match-prediction-tab" data-toggle="pill" href="#curr-match-prediction" role="tab" aria-controls="curr-match-prediction" aria-selected="false">Current Match Prediction</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="player-update" role="tabpanel" aria-labelledby="player-update-tab">
+          
+          <div class="row">
+            <form id="player_team_assignment" class="needs-validation player_team_assignment" novalidate>
+                                 
+              <div class="form-group row">
+                <label for="team" class="col-sm-6 col-form-label">Team Name</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control autocomplete" id="team" placeholder="Search by name" required>
+                </div>
+                <div class="invalid-feedback">Please provide a value</div>
+              </div>
+
+              <div class="form-group row">
+                <label for="player" class="col-sm-6 col-form-label">Player Name</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control autocomplete" id="player" placeholder="Search by name" required>
+                </div>
+                <div class="invalid-feedback">Please provide a value</div>
+              </div>
+          
+              <div class="form-group row">
+                <div class="col-sm-10">
+                  <button id="update_team_assignment" class="btn btn-primary" type="button" onclick="updateTeamAssignment();">Update</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+        </div>
+        <div class="tab-pane fade" id="curr-match-prediction" role="tabpanel" aria-labelledby="curr-match-prediction-tab">
+          <!-- Generic Prediction Form -->
+          {% include 'partials/curr_match_prediction.html' %}
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer mt-auto py-3">
+    <div class="container">
+      <span class="text-muted">Copyright (c) Varun Verma</span>
+    </div>
+  </footer>
+
+  <!-- Footer Scripts -->
+  {% include 'partials/footer_scripts.html' %}
+
+  <!-- Page level custom scripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script src="../static/js/test.js"></script>
+
+</body>
+</html>
