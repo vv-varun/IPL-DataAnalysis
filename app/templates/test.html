@@ -60,7 +60,7 @@
           <a class="nav-link active" id="player-update-tab" data-toggle="pill" href="#player-update" role="tab" aria-controls="player-update" aria-selected="true">Update Player Data</a>
         </li>
         <li class="nav-item" role="presentation">
-          <a class="nav-link" id="curr-match-prediction-tab" data-toggle="pill" href="#curr-match-prediction" role="tab" aria-controls="curr-match-prediction" aria-selected="false">Current Match Prediction</a>
+          <a class="nav-link" id="match-details-tab" data-toggle="pill" href="#match-details" role="tab" aria-controls="match-details" aria-selected="false">Match Details</a>
         </li>
       </ul>
       <div class="tab-content" id="pills-tabContent">
@@ -94,9 +94,57 @@
           </div>
 
         </div>
-        <div class="tab-pane fade" id="curr-match-prediction" role="tabpanel" aria-labelledby="curr-match-prediction-tab">
-          <!-- Generic Prediction Form -->
-          {% include 'partials/curr_match_prediction.html' %}
+        <div class="tab-pane fade" id="match-details" role="tabpanel" aria-labelledby="match-details-tab">
+          <!-- Update Match Details Form -->
+          <div class="row">
+            <form id="update_match_details" class="needs-validation update_match_details" novalidate>
+                                 
+              <div class="form-group row">
+                <label for="matchid" class="col-sm-6 col-form-label">Match ID</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control autocomplete" id="matchid" placeholder="Input Match ID" required>
+                </div>
+                <div class="invalid-feedback">Please provide a value</div>
+              </div>
+
+              <div class="form-group row">
+                <label for="team1" class="col-sm-6 col-form-label">Team 1</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control autocomplete" id="team1" placeholder="Search by name" required>
+                </div>
+                <div class="invalid-feedback">Please provide a value</div>
+              </div>
+
+              <div class="form-group row">
+                <label for="team2" class="col-sm-6 col-form-label">Team 2</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control autocomplete" id="team2" placeholder="Search by name" required>
+                </div>
+                <div class="invalid-feedback">Please provide a value</div>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="True" id="isActiveMatch" checked>
+                <label class="form-check-label" for="isActiveMatch">
+                  Active Match
+                </label>
+              </div>
+              <br>
+              <div class="form-group row">
+                <div class="col-sm-3">
+                  <button id="get_match_details" class="btn btn-secondary" type="button" onclick="getMatchDetails();">Get</button>
+                </div>
+                <div class="col-sm-3">
+                  <button id="bt_update_match_details" class="btn btn-primary" type="button" onclick="updateMatchDetails();">Update</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="row" id="match-info">
+            
+          </div>
+
         </div>
       </div>
 
