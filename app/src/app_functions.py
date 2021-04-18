@@ -124,3 +124,48 @@ def get_current_match():
     query.add_filter("active", "=", True)
     match = list(query.fetch())[0]
     return match
+
+def update_match_details(input_data):
+    client = datastore.Client()
+    pk = client.key("Matches", input_data['matchid'])
+    md = client.get(pk)
+
+    innings_details = {
+        'innings1': {
+            'bowling_team': input_data['team2'],
+            'batting_team': input_data['team1']
+        },
+        'innings2': {
+            'bowling_team': input_data['team1'],
+            'batting_team': input_data['team2']
+        }
+    }
+    
+    # always set other matches as inactive
+    if input_data['isActiveMatch'] == 'true':
+        set_other_matches_inactive()
+
+    if not md is None:
+        md["innings"] = innings_details
+        md["active"] = input_data['isActiveMatch']
+        client.put(md)
+
+    else:
+        md = datastore.Entity(key=pk)
+        md['team1'] = input_data['team1']
+        md['team2'] = input_data['team2']
+        md["innings"] = innings_details
+        md["active"] = input_data['isActiveMatch']
+        client.put(md)
+    
+    return "Player added in team"
+
+def set_other_matches_inactive():
+    client = datastore.Client()
+    query = client.query(kind="Matches")
+    query.add_filter("active", "=", True)
+    matches = list(query.fetch())
+    for match in matches:
+        match['active'] = False
+        client.put(match)
+    
