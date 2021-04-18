@@ -6,6 +6,7 @@ from flask import Flask, render_template, request, jsonify
 from src.app_functions import predict_match_result
 from src.app_functions import update_team_assignment
 from src.app_functions import current_match_prediction
+from src.app_functions import update_match_details
 from google.cloud import datastore
 
 app = Flask(__name__)
@@ -86,6 +87,30 @@ def getCurrentMatchPlayers(team_type):
         return jsonify(players)
 
     return jsonify(players)
+
+
+# API to get Match Details by ID
+@app.route('/matchDetails/<match_id>', methods = ['GET'])
+def getMatchDetailsByID(match_id):
+    pk = client.key("Matches", match_id)
+    md = client.get(pk)
+    match_details = {
+        'team1': md['team1'],
+        'team2': md['team2'],
+        'fi_bat': md['innings']['innings1']['batting_team'],
+        'fi_bol': md['innings']['innings1']['bowling_team'],
+        'si_bat': md['innings']['innings2']['batting_team'],
+        'si_bol': md['innings']['innings2']['bowling_team'],
+        'active': md['active']
+    }
+    return match_details
+
+# API to update Match Details
+@app.route('/test/matchDetails', methods = ['POST'])
+def updateMatchDetails():
+    input_data = request.json
+    update_result = update_match_details(input_data)
+    return jsonify(update_result)
 
 
 if __name__ == '__main__':
