@@ -161,11 +161,13 @@ def update_match_details(input_data):
     return "Player added in team"
 
 def set_other_matches_inactive():
+    print('In function')
     client = datastore.Client()
     query = client.query(kind="Matches")
-    query.add_filter("active", "=", True)
+    query.add_filter("active", "=", 'true')
     matches = list(query.fetch())
     for match in matches:
-        match['active'] = False
+        print(match['active'])
+        match['active'] = 'false'
         client.put(match)
     
