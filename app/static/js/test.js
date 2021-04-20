@@ -192,6 +192,33 @@ function updateMatchResult(){
         });
 }
 
+function updateMatchPrediction(){
+
+    $('#match-result-info').empty();
+    $('#bt_update_match_prediction').text("Updating... Please wait");
+    $('#bt_update_match_prediction').prop( "disabled", true);
+
+    const inputs = $('#update_match_result :input');
+    const form_data = {};
+    inputs.each(function () {
+        form_data[this.id] = $(this).val();
+    });
+    const match_id = form_data['matchid'];
+
+    $.post("updatePredictedResult/" + match_id,
+        "")
+        .done(function (data) {
+            $('#match-result-info').addClass('alert-success').text(data);
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            $('#match-result-info').addClass('alert-success').text(jqXHR.responseText);
+        })
+        .always(function () {
+            $('#bt_update_match_prediction').text("Update Prediction");
+            $('#bt_update_match_prediction').prop( "disabled", false);
+        });
+}
+
 $(document).ready(function () {
 
     loadPlayerNames();

@@ -23,9 +23,9 @@ def predict_match_result(input_data):
     if test_results[0][1] <= 0.5:
         result = "Lost"
     else:
-        result = "Win"
+        result = "Won"
     
-    return {"result":result,"win_probability":int(100 * test_results[0][1])}
+    return {"result":result,"win_probability":int(100 * test_results[0][1]),"loose_probability":int(100 * test_results[0][0])}
 
 def current_match_prediction(input_data):
     ba_stats = get_batsman_stats(input_data['cm_batsman'])
@@ -56,7 +56,7 @@ def current_match_prediction(input_data):
         if testresult[1] <= 0.5:
             mr = "Lost"
         else:
-            mr = "Win"
+            mr = "Won"
         
         pr = {"player": player,"result":mr,"win_probability":int(100 * testresult[1])}
         prdiction_result.append(pr)
@@ -185,9 +185,44 @@ def update_final_over_details(input_data):
     match_result = {
         'actual_result': input_data['result'],
         'predicted_result': '',
-        'confidence': ''
+        'confidence': '',
+        'win_probability': '',
+        'loose_probability': ''
     }
     md["final_over"] = final_over_details
     md["match_result"] = match_result
     client.put(md)
     return "Result updated"
+
+def update_predicted_result(match_id):
+    client = datastore.Client()
+    if match_id == 'all':
+        query = client.query(kind="Matches")
+        match_list = list(query.fetch())
+    else:
+        pk = client.key("Matches", match_id)
+        md = client.get(pk)
+        match_list = [md]
+    
+    for match in match_list:
+        if not 'final_over' in match.keys():
+            continue
+
+        input_data = {
+            'bowler': match['final_over']['bowler'],
+            'batsman': match['final_over']['batsman'],
+            'non_striker': match['final_over']['non_striker'],
+            'runs_to_win': match['final_over']['runs_to_win'],
+            'wickets_in_hand': match['final_over']['wickets_in_hand']
+        }
+        prediction_result = predict_match_result(input_data)
+        match['match_result']['predicted_result'] = prediction_result['result']
+        match['match_result']['win_probability'] = prediction_result['win_probability']
+        match['match_result']['loose_probability'] = prediction_result['loose_probability']
+        if prediction_result['result'] == 'Lost':
+            match['match_result']['confidence'] = prediction_result['loose_probability']
+        else:
+            match['match_result']['confidence'] = prediction_result['win_probability']
+        client.put(match)
+        
+    return

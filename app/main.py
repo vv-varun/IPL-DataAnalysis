@@ -7,6 +7,7 @@ from src.app_functions import predict_match_result
 from src.app_functions import update_team_assignment
 from src.app_functions import current_match_prediction
 from src.app_functions import update_match_details, update_final_over_details
+from src.app_functions import update_predicted_result
 from google.cloud import datastore
 
 app = Flask(__name__)
@@ -118,6 +119,12 @@ def updateMatchFinalOverDetails():
     input_data = request.json
     update_result = update_final_over_details(input_data)
     return jsonify(update_result)
+
+# API to update the predicted result of match
+@app.route('/test/updatePredictedResult/<match_id>', methods = ['POST'])
+def updatePredictedResult(match_id):
+    update_predicted_result(match_id)
+    return "Update done"
 
 if __name__ == '__main__':
     # This is used when running locally only. When deploying to Google App
