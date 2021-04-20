@@ -6,7 +6,7 @@ from flask import Flask, render_template, request, jsonify
 from src.app_functions import predict_match_result
 from src.app_functions import update_team_assignment
 from src.app_functions import current_match_prediction
-from src.app_functions import update_match_details
+from src.app_functions import update_match_details, update_final_over_details
 from google.cloud import datastore
 
 app = Flask(__name__)
@@ -112,6 +112,12 @@ def updateMatchDetails():
     update_result = update_match_details(input_data)
     return jsonify(update_result)
 
+#API to update match final over stats
+@app.route('/test/matchFinalOverDetails', methods = ['POST'])
+def updateMatchFinalOverDetails():
+    input_data = request.json
+    update_result = update_final_over_details(input_data)
+    return jsonify(update_result)
 
 if __name__ == '__main__':
     # This is used when running locally only. When deploying to Google App

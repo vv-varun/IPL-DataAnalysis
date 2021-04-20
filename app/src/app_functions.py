@@ -171,3 +171,23 @@ def set_other_matches_inactive():
         match['active'] = 'false'
         client.put(match)
     
+def update_final_over_details(input_data):
+    client = datastore.Client()
+    pk = client.key("Matches", input_data['matchid'])
+    md = client.get(pk)
+    final_over_details = {
+        'batsman': input_data['batsman'],
+        'non_striker': input_data['non_striker'],
+        'bowler': input_data['bowler'],
+        'runs_to_win': input_data['runs_to_win'],
+        'wickets_in_hand': input_data['wickets_in_hand']
+    }
+    match_result = {
+        'actual_result': input_data['result'],
+        'predicted_result': '',
+        'confidence': ''
+    }
+    md["final_over"] = final_over_details
+    md["match_result"] = match_result
+    client.put(md)
+    return "Result updated"
