@@ -147,7 +147,7 @@ def update_match_details(input_data):
 
     if not md is None:
         md["innings"] = innings_details
-        md["active"] = input_data['isActiveMatch']
+        md["active"] = True if input_data['isActiveMatch'] == 'true' else False
         client.put(md)
 
     else:
@@ -155,7 +155,7 @@ def update_match_details(input_data):
         md['team1'] = input_data['team1']
         md['team2'] = input_data['team2']
         md["innings"] = innings_details
-        md["active"] = input_data['isActiveMatch']
+        md["active"] = True if input_data['isActiveMatch'] == 'true' else False
         client.put(md)
     
     return "Player added in team"
@@ -164,11 +164,10 @@ def set_other_matches_inactive():
     print('In function')
     client = datastore.Client()
     query = client.query(kind="Matches")
-    query.add_filter("active", "=", 'true')
+    query.add_filter("active", "=", True)
     matches = list(query.fetch())
     for match in matches:
-        print(match['active'])
-        match['active'] = 'false'
+        match['active'] = False
         client.put(match)
     
 def update_final_over_details(input_data):
