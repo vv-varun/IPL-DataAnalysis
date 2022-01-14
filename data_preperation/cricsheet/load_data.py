@@ -6,10 +6,10 @@ import datetime
 
 db_connection = mysql.connector.connect(
   host="localhost",
-  port=3308,
+  port=3306,
   user="root",
-  passwd="",
-  database="ipldata"
+  passwd="root",
+  database="IPL"
 )
 
 # Global Variable
@@ -120,8 +120,7 @@ def parseAndUploadDataToDB(match_data):
         match_info['ManOfMach'] = ''
     
     match_info['Country_id'] = ''
-    #print(match_info)
-
+    
     first_innings_data = match_data['innings'][0]['1st innings']
     fi_team = queryTeamDetailsByName(first_innings_data['team'])
     
@@ -175,12 +174,13 @@ def parseAndUploadDataToDB(match_data):
             bd['Team_Batting'] = si_team['id']
             bd['Team_Bowling'] = fi_team['id']
         
-        ball_details.extend(so_first_innings)
+        ball_details.extend(so_second_innings)
 
     # Now update all in a transaction
     uploadDataToDB(match_info, ball_details)
     
     # Print Random for testing
+    #print(match_info)
     #print(first_innings[20])
     #print(first_innings[12])
     #print(second_innings[20])
@@ -194,8 +194,7 @@ def parseInningsData(innings_data):
     bowler_wicket_list = ['caught','bowled','lbw','stumped','caught and bowled']
     for delivery in innings_data['deliveries']:
         ball_no = str(list(delivery.keys())[0])
-        ball_details = list(delivery.values())[0]
-
+        ball_details = list(delivery.values())[0]        
         wicket = ball_details.get('wicket', {'player_out':'','kind':'Not Applicable'})
         wicket_kind = wicket.get('kind','')
         if wicket_kind in bowler_wicket_list:
@@ -227,7 +226,7 @@ def parseInningsData(innings_data):
             'Legbyes': legbyes,
             'Byes': byes,
             'Noballs': noballs,
-            'Penalty': '',
+            'Penalty': 0,
             'Bowler_Extras': bowler_extras,
             'Out_type': wicket['kind'],
             'Caught': 1 if wicket_kind == 'caught' else 0,
@@ -252,11 +251,13 @@ def parseInningsData(innings_data):
     return ball_data
 
 def uploadDataToDB(match_info, ball_details):
+    db_connection.commit()
     my_database = db_connection.cursor()
     db_connection.start_transaction()
 
     # Insert Match Info
-    sql_statement = "INSERT INTO matches VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    del match_info['match_date']
+    sql_statement = "INSERT INTO matches VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
     values = tuple(list(match_info.values()))
     my_database.execute(sql_statement, values)
 

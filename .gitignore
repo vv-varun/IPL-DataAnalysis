@@ -130,3 +130,5 @@ dmypy.json
 
 # ML Model files
 *.joblib
+
+.DS_Store
