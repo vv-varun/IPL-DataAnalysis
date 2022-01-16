@@ -68,11 +68,11 @@ def getPlayerDetailsByName(player_name):
         return player_data[player_name]
 
 # Read data from YAML file
-def readDataFromFile(filename):
+def readDataFromFile(folder_name, filename):
     # Get the filename without extension to extract the match id
     match_id = path.splitext(filename)[0]
     # Open YAML file and load data
-    file = path.dirname(__file__) + '/to_load/' + filename
+    file = path.dirname(__file__) + '/to_load' + folder_name + "/" + filename
     with open(file, 'r') as stream:
         try:
             match_data = yaml.safe_load(stream)
@@ -82,8 +82,8 @@ def readDataFromFile(filename):
     return match_data
 
 # Read files from folders
-def readFilesInFolder():
-    return listdir(path.dirname(__file__) + "/to_load")
+def readFilesInFolder(folder_name):
+    return listdir(path.dirname(__file__) + "/to_load" + folder_name)
 
 # Upload data into MySQL DB
 def parseAndUploadDataToDB(match_data):
@@ -94,8 +94,8 @@ def parseAndUploadDataToDB(match_data):
     match_info['Match_SK'] = match_info['match_id'] = match_data['info']['match_id']
     match_info['Team1'] = match_data['info']['teams'][0]
     match_info['Team2'] = match_data['info']['teams'][1]
-    match_info['match_date_str'] = match_data['info']['dates'][0]
-    match_info['match_date'] = datetime.datetime.strptime(match_data['info']['dates'][0], "%Y-%m-%d").date()
+    match_info['match_date_str'] = str(match_data['info']['dates'][0])
+    match_info['match_date'] = datetime.datetime.strptime(match_info['match_date_str'], "%Y-%m-%d").date()
     match_info['Season_Year'] = match_info['match_date'].year
     match_info['Venue_Name'] = match_data['info']['venue']
     match_info['City_Name'] = match_data['info'].get('city','')
@@ -191,6 +191,9 @@ def parseAndUploadDataToDB(match_data):
 # Parse Innings data
 def parseInningsData(innings_data):
     ball_data = []
+    if 'deliveries' not in innings_data.keys():
+        return ball_data
+    
     bowler_wicket_list = ['caught','bowled','lbw','stumped','caught and bowled']
     for delivery in innings_data['deliveries']:
         ball_no = str(list(delivery.keys())[0])
@@ -244,7 +247,7 @@ def parseInningsData(innings_data):
             'Bowler': getPlayerDetailsByName(ball_details['bowler'])['id'],
             'Player_Out': getPlayerDetailsByName(wicket['player_out'])['id'],
             'Fielders': '',
-            'Keeper_Catch': ''
+            'Keeper_Catch': 0
         })
     
     #print(ball_data)
@@ -271,15 +274,17 @@ def uploadDataToDB(match_info, ball_details):
 
 ######  Main Program    ######
 # Read files to load from directory
-files = readFilesInFolder()
+folder_name = "/ipl"
+files = readFilesInFolder(folder_name)
 
 # Read Data from the file.
 for file in files:
+    fileName = folder_name + "/" + file
     print("Processing file: " + file)
-    match_data = readDataFromFile(file)
+    match_data = readDataFromFile(folder_name, file)
     #print(match_data['info'])
     # Upload into DB
     parseAndUploadDataToDB(match_data)
-    shutil.move(path.dirname(__file__) + "/to_load/" + file, path.dirname(__file__) + "/done/" + file)
+    shutil.move(path.dirname(__file__) + "/to_load/" + fileName, path.dirname(__file__) + "/done/" + fileName)
 
 print("I'm done here !")
